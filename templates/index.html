@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1> {{ request.session.user_info.name }} 你好!你来到了移动商城</h1>
+
+    <h3>扫描关注移动商城（用于消息提示，请必须关注）</h3>
+    <img style="width: 200px;" src="/static/img/0.jpg" alt="">
+    <h3>下一步：请将微信ID发给我</h3>
+    <div id="qrcode" style="width: 250px;height: 250px;background-color: white;">
+
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.qrcode.min.js"></script>
+    <script src="/static/js/qrcode.js"></script>
+    <script>
+        $(function () {
+            get_qcode();
+        })
+
+        function get_qcode() {
+            $.ajax({
+                url:'/get_qrcode/',
+                type:'GET',
+                dataType:'JSON',
+                success:function (arg) {
+                    //arg = {status:True,data:'xxx'}
+                    $('#qrcode').empty().qrcode({text: arg.data});
+                }
+            })
+
+        }
+    </script>
+</body>
+</html>
